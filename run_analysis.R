@@ -1,9 +1,61 @@
+library(reshape2)
+
+# Main entry point for this analysis.
+#
+# Creates a Tidy Dataset for the "UCI HAR Dataset" from:
+# http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+#
+# The Tidy Dataset will be saved on your workdirectory with
+# the name "tidyData.txt". Load the data with:
+# read.table("tidyData.txt", header=TRUE)
+#
+# Function parameters:
+#   pathToDataset: A directory path pointing to the contents inside the
+#                  "UCI HAR Dataset" folder. By default, when this script
+#                  is sourced, the pathToDataset is created with:
+#                  "file.path(".", "UCI HAR Dataset")", so, it tries to
+#                  the directory in your working directory.
+#
+# Note: this function is called when sourcing this file.
+# Note2: All others functions in this file are used by this function, no need to call
+# separately.
 runAnalysis <- function(pathToDataset) {
+  # Load the "features.txt" file containing the names of all the features
   featuresTable <- loadFeatureNames(pathToDataset)
+  # Create a filter to select only features names with "mean()" and "std()"
   featuresFilter <- createFeaturesFilter(featuresTable)
+  # Filter out the features
   featuresTable <- featuresTable[featuresFilter,]
+  # Load the test dataset (inside the "test" subdirectory)
   testTable <- loadData(featuresTable, pathToDataset, "test")
+  # Load the train dataset (inside the "train" subdirectory)
   trainTable <- loadData(featuresTable, pathToDataset, "train")
+  
+  # Combine the test and train datasets into a single table
+  dataTable <- rbind(testTable, trainTable)
+  #dataTable <- testTable
+  
+  print(paste(rep("*",32), collapse=""))
+  print("Size of the merged Data Table:")
+  print(dim(dataTable))
+  print(paste(rep("*",32), collapse=""))
+  
+  # Creating the tidy data table for the last part of the
+  # assignment
+  tidyTable <- tidyDataTable(dataTable)
+  
+  
+  print(paste(rep("*",32), collapse=""))
+  print("Writing tidyData.txt in:")
+  print(getwd())
+  
+  # For step 5 of the assignment:
+  # "data set as a txt file created with write.table() using row.name=FALSE"
+  write.table(tidyTable, "tidyData.txt", row.names=FALSE)
+  
+  if (file.exists(file.path(getwd(), "tidyData.txt")))
+    print("File Saved Successfully.")
+  print(paste(rep("*",32), collapse=""))
 }
 
 # Load the "features.txt" file from the data set
@@ -83,6 +135,28 @@ loadData <- function(featuresTable, pathToDataset, dataType) {
   print(paste(rep("*",32), collapse=""))
   
   dataTable
+}
+
+tidyDataTable <- function(dataTable) {
+  # This creates a skinny data set as in:
+  # https://class.coursera.org/getdata-013/lecture/37
+  dataMelt <- melt(dataTable, id=c("subject", "y"))
+  print(paste(rep("*",32), collapse=""))
+  print(str(dataMelt))
+  print(paste(rep("*",32), collapse=""))
+  
+  # For this dataset I choose to make it 66 columns (number of features)
+  # long, with each "subject/y" pair in a single row. This is called
+  # a wide data format.
+  #
+  # Also, this function also computes the mean for each feature for
+  # each "subject/y" pair.
+  dataCast <- dcast(dataMelt, subject + y ~ variable, mean)
+  print(paste(rep("*",32), collapse=""))
+  print(str(dataCast))
+  print(paste(rep("*",32), collapse=""))
+  
+  dataCast
 }
 
 runAnalysis(file.path(".", "UCI HAR Dataset"))
