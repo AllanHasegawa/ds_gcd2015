@@ -15,3 +15,13 @@ The `tidyData.txt` file contains all the features of the orinal dataset that rep
 The output is a table containg 180 tests cases (number of row), where each test case holds 66 features for each subject/activity pair (66 columns for each feature + 2 columns for subject and activity).
 
 For a detailed description of this table, see the included `Cookbook.md`.
+
+
+A sample of `tidyData.txt` is:
+
+```
+"subject" "y" "tBodyAcc-mean()-X" "tBodyAcc-mean()-Y" (... continues for 64 more columns)
+1 "LAYING" 0.22159824394 -0.0405139534294 (...)
+1 "SITTING" 0.261237565425532 -0.00130828765170213 (...)
+(... continues for 178 more rows)
+```
