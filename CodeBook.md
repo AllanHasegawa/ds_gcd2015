@@ -14,8 +14,16 @@ This dataset contain 66 features of the original dataset for each subject (volun
 
 The original dataset contained multiple feature values for each subject/activity unique pair. This dataset computes the mean for the features associated with the same unique subject/activity pair.
 
+A list of each column is in the Layout section below.
 
-A list of each column is seem below.
+## Reading this dataset in R
+
+To load this dataset in R, simply:
+
+```
+read.table("tidyData.txt", header=TRUE)
+```
+
 
 ## Layout
 
