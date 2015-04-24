@@ -26,3 +26,7 @@ A sample of `tidyData.txt` is:
 1 "SITTING" 0.261237565425532 -0.00130828765170213 (...)
 (... continues for 178 more rows)
 ```
+
+## Understanding step by step how the `tidyData.txt` was generated
+
+Please, see the accompanying `run_analysis.R` script for a step by step instruction on how this dataset was generated. The provided script contains comments and descriptive variables names to walk you through the steps taken to generate this dataset.
