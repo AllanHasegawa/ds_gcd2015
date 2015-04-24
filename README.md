@@ -10,11 +10,12 @@ If the script run successfully, a `tidyData.txt` will be created in your working
 
 ## Understanding the `tidyData.txt` file
 
-The `tidyData.txt` file contains all the features of the orinal dataset that represents mean and standard deviation for each subject id and activity.
+The `tidyData.txt` file contains all the features of the original dataset that represents mean and standard deviation for each subject id and activity. But, features values belonging to the same unique subject id/actitivity pair are grouped together with a mean operation.
 
-The output is a table containg 180 tests cases (number of row), where each test case holds 66 features for each subject/activity pair (66 columns for each feature + 2 columns for subject and activity).
 
-For a detailed description of this table, see the included `Cookbook.md`.
+The output is a table containg 180 rows (each row is a unique subject id/activity pair), where each row holds 66 features for each subject/activity pair (66 columns for each feature + 2 columns for subject and activity).
+
+For a detailed description of this table, see the included `CookBook.md`.
 
 
 A sample of `tidyData.txt` is:
